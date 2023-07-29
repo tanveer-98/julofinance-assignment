@@ -214,7 +214,8 @@ const MovieDetailsCard = ({ id, details }: IMovieDetailsCard) => {
       </div>
       <div className={typeStyle}>{details.Type}</div>
       <div className={imageContainer}>
-        <img className={image}  draggable="false"  src={details.Poster} alt="No image" />
+        <img  width="300px"
+                height="400px" draggable="false"  loading="lazy" src={details.Poster} alt="No image" />
         {/* <LazyLoadImage
        
        src = {details.Poster}

@@ -5,6 +5,7 @@ import { FavMovieContext } from "../../context/FavMovie";
 import { useNavigate } from "react-router-dom";
 import Skeleton from "../MovieCardSkeleton/Skeleton";
 import LazyLoadImage from "../LazyLoader/LazyLoader";
+import SkeletonMovieCard from "../MovieCardSkeleton/SkeletonMovieCard";
 const cardStyle = css`
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -107,15 +108,7 @@ const image = css`
 interface ILoadedImg {
   id: string;
 }
-const MovieCard = ({
- 
-  Poster,
-  id,
-  Title,
-  Genre,
-  Year,
-  Type,
-}: IMovie) => {
+const MovieCard = ({ Poster, id, Title, Genre, Year, Type }: IMovie) => {
   const { favmovies, setFavMovies } = useContext(FavMovieContext);
   const [visibleMovies, setVisibleMovies] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -128,7 +121,7 @@ const MovieCard = ({
   const handleNavigate = (id: string) => {
     navigate(`/details/${id}`);
   };
-
+  
   const handleToggleFavorite = (event: any) => {
     event.stopPropagation();
     if (isFavorite) {
@@ -142,58 +135,49 @@ const MovieCard = ({
       setFavMovies([...favmovies, { id }]);
     }
   };
- const handleLoading = () =>{
-     setLoading(false);
- }
+ 
+  useEffect(()=>{
+    setTimeout(()=>{
+      setLoading(false)
+    },300)
+   
+
+  },[]);
   return (
-    <div className={cardStyle} onClick={() => handleNavigate(id)}>
-      <div className={cardLeft}>
-        <div className={imageContainer}>
-          {/* <LazyImage
-        src={Poster!}// The actual image source
-        alt="Image description"
-        width="200px"
-        height="150px"
-        borderRadius="10px"
-        placeholder={<Skeleton width="200px" height="20px" borderRadius="10px" />} // Your JSX placeholder element
-      /> */
-      // <LazyLoadImage
-       
-      //  src = {Poster!}
-      //  alt="nothing to display"
-      //  placeholder = {<Skeleton width="100%" height="300px" borderRadius="10px" />}
-      //  />
-      }
-
-        
-
-          {/* {loading ? (
+    <>
+      {loading ? (
+        <SkeletonMovieCard />
+      ) : (
+        <div className={cardStyle} onClick={() => handleNavigate(id)}>
+          <div className={cardLeft}>
+            <div className={imageContainer}>
+              {loading ? (
             <Skeleton width="100%" height="400px" borderRadius="10px" />
-          ) : ( */}
-            <img
-              
-              onLoad={() => handleLoading}
-              src={Poster}
-              alt=" NO image "
-              loading="lazy"
-              width="100%"
-              height="500px"
-            />
-          {/* )} */}
+          ) : (
+              <img
+                src={Poster}
+                alt=" NO image "
+                loading="lazy"
+                width="300px"
+                height="400px"
+              />
+              )} 
+            </div>
+            {/* <div className={titleStyle}>{id}</div> */}
+            <div className={titleStyle}>{Title}</div>
+            <div className={genreStyle}>Genre: {Genre}</div>
+            <div className={yearStyle}>Year: {Year}</div>
+            <div className={typeStyle}>Type: {Type}</div>
+          </div>
+          <button
+            className={favoriteButtonStyle}
+            onClick={(event) => handleToggleFavorite(event)}
+          >
+            {isFavorite ? "Remove Fav" : "Add Fav"}
+          </button>
         </div>
-        {/* <div className={titleStyle}>{id}</div> */}
-        <div className={titleStyle}>{Title}</div>
-        <div className={genreStyle}>Genre: {Genre}</div>
-        <div className={yearStyle}>Year: {Year}</div>
-        <div className={typeStyle}>Type: {Type}</div>
-      </div>
-      <button
-        className={favoriteButtonStyle}
-        onClick={(event) => handleToggleFavorite(event)}
-      >
-        {isFavorite ? "Remove Fav" : "Add Fav"}
-      </button>
-    </div>
+      )}
+    </>
   );
 };
 
