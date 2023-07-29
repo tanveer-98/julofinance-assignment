@@ -1,87 +1,75 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { css } from '@emotion/css';
 
-interface LazyImageProps {
+interface LazyLoadImageProps {
   src: string;
   alt: string;
-  width?: string;
-  height?: string;
-  borderRadius?: string;
   placeholder: React.ReactNode;
 }
 
-const LazyImage: React.FC<LazyImageProps> = ({
-  src,
-  alt,
-  width,
-  height,
-  borderRadius,
-  placeholder,
-}) => {
-  console.log(src)
-  const [isLoaded, setIsLoaded] = useState(false);
-  const imageRef = useRef<HTMLImageElement>(null);
-
-  const imageStyles = css`
-    display: ${isLoaded ? 'block' : 'none'};
-    width: ${width || '100%'};
-    height: ${height || 'auto'};
-    border-radius: ${borderRadius || '0'};
-  `;
-
-  const placeholderStyles = css`
-    display: ${isLoaded ? 'none' : 'block'};
-    width: ${width || '100%'};
-    height: ${height || '100px'}; /* You can set the height for your placeholder */
-    border-radius: ${borderRadius || '0'};
-  `;
-
-  const handleImageLoad = () => {
-    setIsLoaded(true);
-  };
+const LazyLoadImage: React.FC<LazyLoadImageProps> = ({ src, alt, placeholder }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const imageRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
-    if (!isLoaded) {
-      const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(
+      (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const img = new Image();
-            img.src = src;
-            img.onload = () => {
-              setIsLoaded(true);
-              observer.unobserve(imageRef.current!);
-            };
+            setIsVisible(true);
+            observer.unobserve(imageRef.current!);
           }
         });
-      });
+      },
+      { root: null, rootMargin: '0px', threshold: 0.1 }
+    );
 
-      if (imageRef.current) {
-        observer.observe(imageRef.current);
-      }
-
-      return () => {
-        if (imageRef.current) {
-          observer.unobserve(imageRef.current);
-        }
-      };
+    if (imageRef.current) {
+      observer.observe(imageRef.current);
     }
-  }, [src, isLoaded]);
 
-  
+    return () => {
+      if (imageRef.current) {
+        observer.unobserve(imageRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <div>
-      <div className={placeholderStyles} style={{ display: isLoaded ? 'none' : 'block' }}>
-        {placeholder}
-      </div>
+    <div
+      className={css`
+        position: relative;
+        width: 300px;
+        height: 200px;
+        overflow: hidden;
+      `}
+    >
+      {!isVisible && (
+        <div
+          className={css`
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          `}
+        >
+          {placeholder}
+        </div>
+      )}
       <img
         ref={imageRef}
-        src={isLoaded ? src : ''}
+        className={css`
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: ${isVisible ? 'block' : 'none'};
+        `}
+        src={isVisible ? src : ''}
         alt={alt}
-        className={imageStyles}
-        style={{ display: isLoaded ? 'block' : 'none' }}
       />
     </div>
   );
 };
 
-export default LazyImage;
+export default LazyLoadImage;

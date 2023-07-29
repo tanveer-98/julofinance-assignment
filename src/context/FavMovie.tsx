@@ -1,6 +1,4 @@
 import React ,{createContext,useEffect, useState} from 'react';
-import axios from 'axios';
-
 interface IMovie {
     id: string;
   }
@@ -31,6 +29,5 @@ const FavMovieProvider = ({children} : any)=>{
     </FavMovieContext.Provider>
   )
 }
-
 
 export {FavMovieProvider , FavMovieContext};

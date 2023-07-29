@@ -3,6 +3,8 @@ import { css } from "@emotion/css";
 import { IMovieDetails } from "../../types";
 import { FavMovieContext } from "../../context/FavMovie";
 import { useNavigate } from "react-router-dom";
+import LazyLoadImage from "../LazyLoader/LazyLoader";
+import Skeleton from "../MovieCardSkeleton/Skeleton";
 const cardStyle = css`
   border: 1px solid #ccc;
   //   border-radius: 8px;
@@ -176,7 +178,7 @@ interface IMovieDetailsCard {
 }
 const MovieDetailsCard = ({ id, details }: IMovieDetailsCard) => {
   const { favmovies, setFavMovies } = useContext(FavMovieContext);
-  const [visibleMovies, setVisibleMovies] = useState([]);
+  
   //  console.log("Poster : ",Poster)
   const listRef = useRef(null);
 
@@ -189,7 +191,7 @@ const MovieDetailsCard = ({ id, details }: IMovieDetailsCard) => {
 
   const handleToggleFavorite = (event: any) => {
     event.stopPropagation();
-    console.log("clicked");
+    // console.log("clicked");
     if (isFavorite) {
       // Remove movie from favorites
       const updatedFavMovies = favmovies.filter(
@@ -213,6 +215,13 @@ const MovieDetailsCard = ({ id, details }: IMovieDetailsCard) => {
       <div className={typeStyle}>{details.Type}</div>
       <div className={imageContainer}>
         <img className={image}  draggable="false"  src={details.Poster} alt="No image" />
+        {/* <LazyLoadImage
+       
+       src = {details.Poster}
+       alt="nothing to display"
+       placeholder = {<Skeleton width="100%" height="300px" borderRadius="10px" />}
+       /> */}
+        
         <div className={plotStyleDesktop}> {details.Plot}</div>
       </div>
 

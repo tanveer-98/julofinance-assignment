@@ -2,6 +2,7 @@ import React ,{createContext,useEffect, useState} from 'react';
 import axios from 'axios';
 import  MoviesData  from './MovieList.json'
 import {css} from '@emotion/css'
+import Loading from '../components/Loading/Loading';
 const MovieContext = createContext([]);
 interface IIMDBdata {
   title? : string; 
@@ -26,17 +27,22 @@ const MovieProvider = ({children} : any)=>{
       const fetchedMovies = [];
 
       try {
+        let count = 0; 
         for (const id of movieIds) {
           // console.log(id)
+          count++;
           const response = await axios.get<IIMDBdata>(
             `http://www.omdbapi.com/?i=${id}&apikey=cb54531b`
           );
           // console.log(response.data)
           fetchedMovies.push({id, ...response.data});
+          if(count!=0 && count%5==0){
+            // Pushing in batches
+            setMovies(fetchedMovies);
+            setLoading(false);
+          }
         }
 
-        setMovies(fetchedMovies);
-        setLoading(false)
       } catch (error) {
         console.error('Error fetching movie data:', error);
         setLoading(false)
@@ -50,7 +56,7 @@ const MovieProvider = ({children} : any)=>{
   if (loading) {
     return <div
     className={LoadingStyle}
-    >Loading...</div>;
+    ><Loading/></div>;
   }
 
   return (

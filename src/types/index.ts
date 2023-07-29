@@ -15,7 +15,7 @@ export interface IMovieDetails{
     Genre : string;
     Type : string;
     isDetails ? : boolean;
-    Poster?: string;
+    Poster: string;
     Director : string ; 
     Country : string;
     Language : string; 

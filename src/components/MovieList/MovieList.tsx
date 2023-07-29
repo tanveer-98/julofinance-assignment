@@ -2,10 +2,7 @@ import React, { useState, useEffect, useRef, useContext, useMemo , useCallback }
 import { MovieContext } from "../../context/MovieContext";
 import {useNavigate} from 'react-router-dom'
 import "./movielistStyles.css";
-// import styled from  '@emotion/styled';
 import { css } from "@emotion/css";
-
-import { IMovie } from "../../types"
 import MovieCard from "../MovieCard/MovieCard";
 
 const moviecontainer = css`
@@ -73,17 +70,17 @@ const MovieList = () => {
   // }, [movies]);
   
   const loadMoreMovies = useCallback(() => {
-    console.log('called')
-    // if(movies!=null)
-    console.log(movies)
+
     const nextMovies = movies?.slice(
       visibleMovies.length,
       visibleMovies.length + 5
     );
-    console.log("next movies")
-    console.log(nextMovies)
-    // console.log("Next Movies: " + nextMovies)
-    setVisibleMovies((prev)=>[...prev, ...nextMovies]);
+ 
+    setVisibleMovies((prev)=>{
+      if(prev!= null && JSON.stringify(prev[0]) != JSON.stringify(nextMovies[0]))
+      return [...prev, ...nextMovies]
+      else return [...prev]
+    });
   },[visibleMovies.length]);
   
   const handleIntersection = useCallback((entries : IntersectionObserverEntry[]) => {
@@ -110,15 +107,10 @@ const MovieList = () => {
   }, [handleIntersection]);
 
   useEffect(() => {
-    // if(movies.length==0)
-    // if(visibleMovies.len)
+
     setVisibleMovies(movies.slice(0, 5));
   }, []);
 
-  // useEffect(() => {
-  //   console.log(visibleMovies);
-  // }, [visibleMovies]);
-  
 
   return (
     <div>
@@ -157,13 +149,10 @@ const MovieList = () => {
                 Year={movie.Year}
                 Type={movie.Type}
               />
+             
             );
           })
-          //  movies.map((movie: any)=>{
-          //   return (
-          //     <MovieCard Poster = {movie.Poster} key={movie.id} id={movie.id} Title ={movie.Title} Genre= {movie.Genre} Year= {movie.Year} Type ={movie.Type} />
-          //   )
-          //  })
+      
         }
       <div ref={listRef} />
       </div>

@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FavMovieContext } from "../../context/FavMovie";
-// import "./movielistStyles.css";
-// import styled from  '@emotion/styled';
 import { css } from "@emotion/css";
-
-import { IMovie } from "../../types";
 import MovieCard from "../MovieCard/MovieCard";
 import { MovieContext } from "../../context/MovieContext";
 
@@ -14,6 +10,7 @@ const moviecontainer = css`
   align-items: center;
   width: 100%;
   height: 100%;
+  margin-top: 200px;
   place-items: center;
   grid-template-columns: 1fr 1fr; /* Two columns for desktop and tablet view */
 
@@ -22,7 +19,11 @@ const moviecontainer = css`
     grid-template-columns: 1fr;
   }
 `;
-
+const headingStyle = css`
+ margin:0px;
+ flex : 1;
+ color :#c5c5c5;
+`
 const MyMovies = () => {
   // const color = "darkgreen";
   const { favmovies } = useContext(FavMovieContext);
@@ -40,19 +41,29 @@ const MyMovies = () => {
       }
     }
     setFavMoviesData(favmoviesData);
-    console.log(favmoviesData);
+    // console.log(favmoviesData);
   }, [favmovies, movies]);
   return (
     <div className="movielist__container">
-      <h3
+      <div
         className={css({
           width: "100%",
           fontSize: "2rem",
-          textAlign: "center"
+          textAlign: "center",
+          position: "fixed",
+          zIndex: 10,
+          backgroundColor: "gray",
+          padding: "20px 0px",
+          marginBottom: "200px",
+          top: "0px",
+          left: "0px",
         })}
       >
-        MY FAVOURITES
-      </h3>
+        <h3 className = {headingStyle}>FAVOURITE MOVIES</h3>
+       
+
+
+      </div>
 
       {favmoviesData && favmoviesData.length != 0 ? (
         <div className={moviecontainer}>
@@ -78,6 +89,7 @@ const MyMovies = () => {
             alignItems: "center",
             fontSize: "bold",
             width: "100%",
+            height: "200px", 
           })}
         >
           NO FAVOURITES
