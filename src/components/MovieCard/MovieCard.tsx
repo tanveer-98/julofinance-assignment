@@ -112,9 +112,7 @@ const MovieCard = ({ Poster, id, Title, Genre, Year, Type }: IMovie) => {
   const { favmovies, setFavMovies } = useContext(FavMovieContext);
   const [visibleMovies, setVisibleMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-  //  console.log("Poster : ",Poster)
   const listRef = useRef(null);
-
   const isFavorite = favmovies.some((favMovie) => favMovie.id === id);
   const navigate = useNavigate();
 

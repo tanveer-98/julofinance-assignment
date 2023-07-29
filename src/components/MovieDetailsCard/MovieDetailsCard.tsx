@@ -110,14 +110,13 @@ const imageContainer = css`
 `;
 
 const image = css`
-
   width: 100%;
+  height: 100%;
   object-fit: contain;
-  //   background-postition: center;
-
-  @media (min-width: 500px) {
-    /* Styles applied when the viewport width is 600px or less */
-    width: 300px;
+  
+  @media (min-width: 300px) {
+    width: 200px;
+    height: 300px;
   }
 
   @media (min-width: 601px) {
@@ -214,8 +213,7 @@ const MovieDetailsCard = ({ id, details }: IMovieDetailsCard) => {
       </div>
       <div className={typeStyle}>{details.Type}</div>
       <div className={imageContainer}>
-        <img  width="300px"
-                height="400px" draggable="false"  loading="lazy" src={details.Poster} alt="No image" />
+        <img  className={image} draggable="false"  loading="lazy" src={details.Poster} alt="No image" />
         {/* <LazyLoadImage
        
        src = {details.Poster}
@@ -223,7 +221,7 @@ const MovieDetailsCard = ({ id, details }: IMovieDetailsCard) => {
        placeholder = {<Skeleton width="100%" height="300px" borderRadius="10px" />}
        /> */}
         
-        <div className={plotStyleDesktop}> {details.Plot}</div>
+        {/* <div className={plotStyleDesktop}> {details.Plot}</div> */}
       </div>
 
       {/* <div className={titleStyle}>{id}</div> */}

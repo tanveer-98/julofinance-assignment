@@ -5,7 +5,6 @@ import MovieDetailsCard from "../MovieDetailsCard/MovieDetailsCard";
 import { IMovie, IMovieDetails } from "../../types";
 import SkeletonMovieCard from "../MovieCardSkeleton/SkeletonMovieCard";
 
-
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState<IMovie | null>(null);
