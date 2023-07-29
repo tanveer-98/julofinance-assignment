@@ -32,7 +32,7 @@ const MovieProvider = ({children} : any)=>{
           // console.log(id)
           count++;
           const response = await axios.get<IIMDBdata>(
-            `http://www.omdbapi.com/?i=${id}&apikey=cb54531b`
+            `https://www.omdbapi.com/?i=${id}&apikey=cb54531b`
           );
           // console.log(response.data)
           fetchedMovies.push({id, ...response.data});

@@ -14,7 +14,7 @@ const MovieDetails = () => {
   useEffect(() => {
     console.log(id);
     axios
-      .get(`http://www.omdbapi.com/?i=${id}&apikey=cb54531b`)
+      .get(`https://www.omdbapi.com/?i=${id}&apikey=cb54531b`)
       .then((response) => {
         // Assuming the API response contains an array of movie objects
         // console.log("INSIDE MOVIE DEAILS");
