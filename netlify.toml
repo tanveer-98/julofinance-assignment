@@ -4,10 +4,10 @@
   # If not set, defaults to the root directory.
   base = "/"
   
-  publish = "dist/"
+  publish = "build"
 
   # Default build command.
-  command = "yarn build"
+  command = "CI= npm run build"
   
 [[redirects]]
   from = "/*"
