@@ -1,25 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense, useEffect, useState } from "react";
+import logo from "./logo.svg";
+import { css } from "@emotion/css";
+import { MovieProvider } from "./context/MovieContext";
+import Home from "./components/Home/Home";
+import { Routes, Route } from "react-router-dom";
+import MovieDetails from "./components/MovieDetails/MovieDetails";
+import MyMovies from "./components/MyMovies/MyMovies";
+const LazyMyMovies = React.lazy(
+  () => import("./components/MyMovies/MyMovies")
+);
+// import './App.css';
 
+const loadingStyle = css`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/details/:id" element={<MovieDetails />} />
+      {/* <Route path="/favmovies" element={<MyMovies />} /> */}
+      <Route
+        path="/favmovies"
+        element={
+          <Suspense
+            fallback={
+              <div className="w-screen h-screen">
+                <div className={loadingStyle}>Loading ...</div>
+              </div>
+            }
+          >
+            <LazyMyMovies />
+          </Suspense>
+        }
+      />
+    </Routes>
   );
 }
 
