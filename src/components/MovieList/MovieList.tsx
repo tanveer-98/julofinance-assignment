@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { MovieContext } from "../../context/MovieContext";
 import { useNavigate } from "react-router-dom";
-import "./movielistStyles.css";
+
 import { css } from "@emotion/css";
 import MovieCard from "../MovieCard/MovieCard";
 import Button from "../Button/Button";
