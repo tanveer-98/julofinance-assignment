@@ -29,4 +29,5 @@ export interface IMovieDetails{
     imdbVotes: string;
     Actors : string;
     Runtime: string;
+    duration : string 
 }

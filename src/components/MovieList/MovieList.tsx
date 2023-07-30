@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import "./movielistStyles.css";
 import { css } from "@emotion/css";
 import MovieCard from "../MovieCard/MovieCard";
+import Button from "../Button/Button";
 
 const moviecontainer = css`
   display: grid;
@@ -44,12 +45,19 @@ const buttonStyle = css`
     box-shadow : 2px 2px 10px rgba(0,0,0,0.5);
   }
 `
+const ScrollContainer = css`
+  width: 100%;
+  height: 200px;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+
+`
 
 const MovieList = () => {
-  // const color = "darkgreen";
+  
   const movies = useContext(MovieContext);
   const [visibleMovies, setVisibleMovies] = useState([]);
-  // const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const listRef = useRef<HTMLDivElement>(null);
@@ -61,14 +69,6 @@ const MovieList = () => {
     },100)
   }
 
-  // useEffect(() => {
-  //   setTimeout(()=>{
-  //     setLoading(false)
-
-  //   }
-  //   ,2000)
-  // }, [movies]);
-  
   const loadMoreMovies = useCallback(() => {
 
     const nextMovies = movies?.slice(
@@ -154,6 +154,12 @@ const MovieList = () => {
           })
       
         }
+
+<div className={ScrollContainer}>
+           <Button bgcolor ="#33ff" text="Scroll for More">
+            Scroll For More 
+           </Button>
+            </div>
       <div ref={listRef} />
       </div>
     </div>
