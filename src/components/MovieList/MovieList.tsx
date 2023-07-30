@@ -158,10 +158,10 @@ const MovieList = () => {
           );
         })}
 
+      </div>
         <div className={ScrollContainer}>
           <Button bgcolor="#33ff" text="Scroll for More"/>
         </div>
-      </div>
       <div ref={listRef} />
     </div>
   );
