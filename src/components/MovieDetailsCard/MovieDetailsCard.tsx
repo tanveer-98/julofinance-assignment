@@ -39,7 +39,9 @@ const genreStyle = css`
   margin-top: 10px;
   font-size: 14px;
   width: fit-content;
-  //   display:flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 2px 5px;
   color: #666;
   margin-bottom: 4px;
@@ -102,7 +104,7 @@ const favoriteButtonStyle = css`
 
 const imageContainer = css`
   width: 100%;
-  display : flex ;
+  display: flex;
   flex-direction: row;
   gap: 10px;
   object-fit: contain;
@@ -113,7 +115,7 @@ const image = css`
   width: 100%;
   height: 100%;
   object-fit: contain;
-  
+
   @media (min-width: 300px) {
     width: 200px;
     height: 300px;
@@ -130,8 +132,8 @@ const DetailsContainer = css`
 
 const subTitle = css`
   display: flex;
-  justifyContent : center;
-  alignItems: center;
+  justifycontent: center;
+  alignitems: center;
   flex-direction: row;
   flex-wrap: wrap;
 `;
@@ -143,7 +145,7 @@ const plotStyle = css`
   font-weight: bold;
   border-bottom: 1px solid #c5c5c5;
 `;
-const plotStyleDesktop= css`
+const plotStyleDesktop = css`
   font-size: 15px;
   color: #666;
   padding: 5px 2px;
@@ -153,7 +155,6 @@ const plotStyleDesktop= css`
   @media (min-width: 301px) {
     visibility: hidden;
   }
-
 `;
 const miscStyle = css`
   font-size: 15px;
@@ -162,7 +163,7 @@ const miscStyle = css`
   margin-bottom: 4px;
   font-weight: bold;
   border-bottom: 1px solid #c5c5c5;
-   @media (min-width: 601px) {
+  @media (min-width: 601px) {
     margin-right: 0px;
   }
 `;
@@ -178,7 +179,7 @@ interface IMovieDetailsCard {
 }
 const MovieDetailsCard = ({ id, details }: IMovieDetailsCard) => {
   const { favmovies, setFavMovies } = useContext(FavMovieContext);
-  
+
   //  console.log("Poster : ",Poster)
   const listRef = useRef(null);
 
@@ -214,14 +215,20 @@ const MovieDetailsCard = ({ id, details }: IMovieDetailsCard) => {
       </div>
       <div className={typeStyle}>{details.Type}</div>
       <div className={imageContainer}>
-        <img  className={image} draggable="false"  loading="lazy" src={details.Poster} alt="No image" />
+        <img
+          className={image}
+          draggable="false"
+          loading="lazy"
+          src={details.Poster}
+          alt="No image"
+        />
         {/* <LazyLoadImage
        
        src = {details.Poster}
        alt="nothing to display"
        placeholder = {<Skeleton width="100%" height="300px" borderRadius="10px" />}
        /> */}
-        
+
         {/* <div className={plotStyleDesktop}> {details.Plot}</div> */}
       </div>
 
@@ -230,7 +237,13 @@ const MovieDetailsCard = ({ id, details }: IMovieDetailsCard) => {
         <div className={genreStyle}> {details.Genre}</div>
         {/* <div className={subTitle}> */}
         <div className={typeStyle}> ⭐{details.imdbRating}/10</div>
-        <div className={typeStyle}> {Math.floor(parseInt(details.imdbVotes.replaceAll(',',""))/1000).toString()}K Votes</div>
+        <div className={typeStyle}>
+          {" "}
+          {Math.floor(
+            parseInt(details.imdbVotes.replaceAll(",", "")) / 1000
+          ).toString()}
+          K Votes
+        </div>
 
         {/* </div> */}
         <div className={plotStyle}> {details.Plot}</div>
