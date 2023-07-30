@@ -159,9 +159,7 @@ const MovieList = () => {
         })}
 
         <div className={ScrollContainer}>
-          <Button bgcolor="#33ff" text="Scroll for More">
-            Scroll For More
-          </Button>
+          <Button bgcolor="#33ff" text="Scroll for More"/>
         </div>
       </div>
       <div ref={listRef} />
