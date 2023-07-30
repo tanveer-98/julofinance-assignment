@@ -133,6 +133,7 @@ const subTitle = css`
   justifyContent : center;
   alignItems: center;
   flex-direction: row;
+  flex-wrap: wrap;
 `;
 const plotStyle = css`
   font-size: 15px;
